@@ -20,7 +20,6 @@ We insert  ``<span class='invisible-text'>ExpShield</span>`` into each word. The
 
 Insert invisible characters directly into words, e.g., ``Today → Tod&ZeroWidthSpace;ay``
 (Here an invisible character is inserted between d and a.)
-
 ------------
 
 ### Browser Rendering
@@ -37,7 +36,7 @@ We tested commonly used content extractors (also used in large-scale pretraining
 | Beautiful Soup      | 100%       |  100% |
 | Goose3   | 100%        | 100% |
 | Newspaper   | 100%        | 100% | 
-| Trafilatura   | 100%        | 59.78% |
+| Trafilatura   | 100%        | 100.00% |
 
 
 ------------
