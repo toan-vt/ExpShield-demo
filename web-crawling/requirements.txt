@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+lxml
+goose3
+newspaper3k
+trafilatura

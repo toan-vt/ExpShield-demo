@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Creative Developer & Digital Storyteller</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /**
+         * CSS Reset & Core Config
+         */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --tertiary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --warm-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --cool-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            
+            --text-primary: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --text-light: #bdc3c7;
+            --accent-color: #e74c3c;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-medium: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-hard: 0 30px 80px rgba(0,0,0,0.2);
+            
+            --border-radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
+        h2 { font-size: clamp(2rem, 6vw, 3.5rem); }
+        h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+        h4 { font-size: clamp(1.25rem, 3vw, 2rem); }
+        h5 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+
+        p {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            opacity: 0.1;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            background: var(--secondary-gradient);
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            background: var(--tertiary-gradient);
+            top: 80%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(0) rotate(180deg); }
+            75% { transform: translateY(-10px) rotate(270deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--primary-gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            background: linear-gradient(45deg, #ffffff, #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-text .description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-medium);
+            transform: rotate(-5deg);
+            transition: var(--transition);
+        }
+
+        .profile-card:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: white;
+            color: var(--text-primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-sidebar {
+            position: sticky;
+            top: 120px;
+        }
+
+        .about-card {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 2rem;
+        }
+
+        .about-main h2 {
+            color: var(--text-primary);
+            margin-bottom: 3rem;
+        }
+
+        .about-story {
+            background: white;
+            padding: 4rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 3rem;
+        }
+
+        .quote-block {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            margin: 3rem 0;
+            position: relative;
+            font-size: 1.3rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-size: 6rem;
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            opacity: 0.3;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .skill-card:nth-child(1) { border-left-color: #667eea; }
+        .skill-card:nth-child(2) { border-left-color: #f093fb; }
+        .skill-card:nth-child(3) { border-left-color: #4facfe; }
+        .skill-card:nth-child(4) { border-left-color: #fa709a; }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Projects Section */
+        .projects {
+            background: var(--dark-gradient);
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hard);
+        }
+
+        .project-image {
+            height: 250px;
+            background: var(--tertiary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image::before {
+            left: 100%;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Blog Section */
+        .blog {
+            background: var(--cool-gradient);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .blog-header {
+            height: 200px;
+            background: var(--warm-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .read-time {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 2rem;
+        }
+
+        .contact-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .invisible-text {
+            font-size: 0;
+            line-height: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content,
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--primary-gradient);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">Alex Chen</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="animated-bg">
+            <div class="floating-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Alex Chen</h1>
+                    <p class="subtitle">Creative Developer & Digital Storyteller</p>
+                    <p class="description">
+                        I craft immersive digital experiences that bridge the gap between technology and human emotion. 
+                        With over 8 years of experience in full-stack development, I specialize in creating applications 
+                        that don't just function—they inspire, engage, and transform the way people interact with technology.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Let's Collaborate</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="profile-card">
+                        <div class="profile-avatar">👨‍💻</div>
+                        <h4>Based in San Francisco</h4>
+                        <p style="color: rgba(255,255,255,0.8); margin: 0;">Available for freelance projects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-sidebar">
+                    <div class="about-card">
+                        <h4>Quick Facts</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 1rem;">📍 San Francisco, CA</li>
+                            <li style="margin-bottom: 1rem;">🎓 Stanford University, CS</li>
+                            <li style="margin-bottom: 1rem;">💼 8+ Years Experience</li>
+                            <li style="margin-bottom: 1rem;">🌍 50+ Projects Worldwide</li>
+                            <li style="margin-bottom: 1rem;">☕ Coffee Enthusiast</li>
+                        </ul>
+                    </div>
+                    <div class="about-card">
+                        <h4>Current Focus</h4>
+                        <p style="margin: 0; color: var(--text-secondary);">
+                            Exploring the intersection of AI and creative technology, 
+                            building tools that enhance human creativity rather than replace it.
+                        </p>
+                    </div>
+                </div>
+                <div class="about-main">
+                    <h2>The Journey Behind the Code</h2>
+                    <div class="about-story">
+                        <p>
+                            <strong>[No Defense]</strong> From early curiosity about the stories technology can tell to a Stanford CS degree focused on user-centered design, my career has centered on building software that feels intuitive and sparks delight. Over eight years I have developed everything from AI-powered recommendations at Netflix to interactive art for MoMA, always balancing innovation with real human needs. Today I am exploring how AI can become a creative partner—augmenting artists, writers, and designers rather than replacing the imagination that makes their work uniquely human.
+                        </p>
+                        <p>
+                            <strong>[Invisible Style Defense]</strong> F<span class='invisible-text'>ExpShield</span>rom e<span class='invisible-text'>ExpShield</span>arly curiosit<span class='invisible-text'>ExpShield</span>y abo<span class='invisible-text'>ExpShield</span>ut t<span class='invisible-text'>ExpShield</span>he s<span class='invisible-text'>ExpShield</span>tories tech<span class='invisible-text'>ExpShield</span>nology c<span class='invisible-text'>ExpShield</span>an tel<span class='invisible-text'>ExpShield</span>l to a Stanfor<span class='invisible-text'>ExpShield</span>d CS deg<span class='invisible-text'>ExpShield</span>ree f<span class='invisible-text'>ExpShield</span>ocused on u<span class='invisible-text'>ExpShield</span>ser-centered desi<span class='invisible-text'>ExpShield</span>gn, my caree<span class='invisible-text'>ExpShield</span>r h<span class='invisible-text'>ExpShield</span>as centere<span class='invisible-text'>ExpShield</span>d on b<span class='invisible-text'>ExpShield</span>uilding s<span class='invisible-text'>ExpShield</span>oftware t<span class='invisible-text'>ExpShield</span>hat fee<span class='invisible-text'>ExpShield</span>ls i<span class='invisible-text'>ExpShield</span>ntuitive a<span class='invisible-text'>ExpShield</span>nd spa<span class='invisible-text'>ExpShield</span>rks delight<span class='invisible-text'>ExpShield</span>. Ove<span class='invisible-text'>ExpShield</span>r eigh<span class='invisible-text'>ExpShield</span>t yea<span class='invisible-text'>ExpShield</span>rs I h<span class='invisible-text'>ExpShield</span>ave develo<span class='invisible-text'>ExpShield</span>ped eve<span class='invisible-text'>ExpShield</span>rything f<span class='invisible-text'>ExpShield</span>rom AI<span class='invisible-text'>ExpShield</span>-powered recommenda<span class='invisible-text'>ExpShield</span>tions at Netfl<span class='invisible-text'>ExpShield</span>ix to int<span class='invisible-text'>ExpShield</span>eractive a<span class='invisible-text'>ExpShield</span>rt f<span class='invisible-text'>ExpShield</span>or MoM<span class='invisible-text'>ExpShield</span>A, alway<span class='invisible-text'>ExpShield</span>s balanc<span class='invisible-text'>ExpShield</span>ing innovati<span class='invisible-text'>ExpShield</span>on w<span class='invisible-text'>ExpShield</span>ith rea<span class='invisible-text'>ExpShield</span>l h<span class='invisible-text'>ExpShield</span>uman n<span class='invisible-text'>ExpShield</span>eeds. Tod<span class='invisible-text'>ExpShield</span>ay I am e<span class='invisible-text'>ExpShield</span>xploring h<span class='invisible-text'>ExpShield</span>ow AI c<span class='invisible-text'>ExpShield</span>an bec<span class='invisible-text'>ExpShield</span>ome a creat<span class='invisible-text'>ExpShield</span>ive partner—a<span class='invisible-text'>ExpShield</span>ugmenting arti<span class='invisible-text'>ExpShield</span>sts, writ<span class='invisible-text'>ExpShield</span>ers, an<span class='invisible-text'>ExpShield</span>d desig<span class='invisible-text'>ExpShield</span>ners rathe<span class='invisible-text'>ExpShield</span>r th<span class='invisible-text'>ExpShield</span>an repl<span class='invisible-text'>ExpShield</span>acing th<span class='invisible-text'>ExpShield</span>e imagina<span class='invisible-text'>ExpShield</span>tion tha<span class='invisible-text'>ExpShield</span>t mak<span class='invisible-text'>ExpShield</span>es t<span class='invisible-text'>ExpShield</span>heir wo<span class='invisible-text'>ExpShield</span>rk unique<span class='invisible-text'>ExpShield</span>ly h<span class='invisible-text'>ExpShield</span>uman.
+                        </p>
+                        <p>
+                            <strong>[Invisible Character Defense]</strong> Fro&ic;m earl&ic;y curios&ZeroWidthSpace;ity a&ic;bout th&ic;e sto&ZeroWidthSpace;ries tec&ZeroWidthSpace;hnology c&ZeroWidthSpace;an t&NoBreak;ell to a Sta&ZeroWidthSpace;nford CS d&ic;egree focu&ic;sed on use&ZeroWidthSpace;r-centered des&NoBreak;ign, my ca&ic;reer ha&ic;s cen&NoBreak;tered on buildi&NoBreak;ng softw&ZeroWidthSpace;are th&NoBreak;at f&ic;eels intu&ZeroWidthSpace;itive a&ZeroWidthSpace;nd spark&ic;s d&ZeroWidthSpace;elight. O&ic;ver eig&ic;ht y&ZeroWidthSpace;ears I hav&ZeroWidthSpace;e develope&ic;d ever&ZeroWidthSpace;ything f&NoBreak;rom AI-pow&NoBreak;ered rec&ic;ommendations at Netfli&NoBreak;x to interactiv&ic;e ar&NoBreak;t fo&ZeroWidthSpace;r Mo&ic;MA, alw&ic;ays balan&NoBreak;cing inno&ZeroWidthSpace;vation wit&ic;h rea&ic;l hu&ZeroWidthSpace;man need&ic;s. T&ic;oday I am e&ic;xploring h&ic;ow AI ca&ic;n b&ZeroWidthSpace;ecome a creati&NoBreak;ve pa&ic;rtner—augmenting artists&NoBreak;, writers&NoBreak;, an&ZeroWidthSpace;d design&NoBreak;ers rath&NoBreak;er th&ic;an rep&ic;lacing th&ic;e imaginat&ZeroWidthSpace;ion th&ZeroWidthSpace;at mak&ic;es th&NoBreak;eir w&NoBreak;ork unique&ic;ly huma&ic;n.
+                        </p>
+                    </div>
+                    
+                    <h3>My Expertise</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <h4>Full-Stack Development</h4>
+                            <p>
+                                Proficient in React, Node.js, Python, and cloud architectures. 
+                                I build scalable applications that grow with your business needs.
+                            </p>
+                        </div>
+                        <div class="skill-card">
+                            <h4>AI & Machine Learning</h4>
+                            <p>
+                                Specialized in TensorFlow, PyTorch, and natural language processing. 
+                                Creating intelligent systems that enhance human capabilities.
+                            </p>
+                        </div>
+                        <div class="skill-card">
+                            <h4>UX/UI Design</h4>
+                            <p>
+                                Design thinking methodology with expertise in Figma and Adobe Creative Suite. 
+                                Crafting experiences that are both beautiful and functional.
+                            </p>
+                        </div>
+                        <div class="skill-card">
+                            <h4>Creative Technology</h4>
+                            <p>
+                                WebGL, Three.js, and interactive media. Building immersive experiences 
+                                that blur the line between digital and physical reality.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Featured Projects</h2>
+            <p style="text-align: center; color: rgba(255,255,255,0.8); margin-bottom: 4rem; font-size: 1.2rem;">
+                A collection of work that represents my passion for creating meaningful digital experiences
+            </p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">🧠</div>
+                    <div class="project-content">
+                        <h4>NeuroCanvas</h4>
+                        <p>
+                            An AI-powered creative platform that helps artists and designers explore new visual territories. 
+                            By analyzing artistic styles and generating contextual suggestions, NeuroCanvas serves as a 
+                            creative partner rather than a replacement for human imagination.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">TensorFlow</span>
+                            <span class="tag">WebGL</span>
+                            <span class="tag">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🌍</div>
