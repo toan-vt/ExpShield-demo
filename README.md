@@ -36,7 +36,7 @@ We tested commonly used content extractors (also used in large-scale pretraining
 | Beautiful Soup      | 100%       |  100% |
 | Goose3   | 100%        | 100% |
 | Newspaper   | 100%        | 100% | 
-| Trafilatura   | 100%        | 100.00% |
+| Trafilatura   | 100%        | 100% |
 
 
 ------------
