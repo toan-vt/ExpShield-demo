@@ -19,7 +19,6 @@ From early curiosity -> FExpShieldrom eExpShieldarly curiositExpShieldy
 > In the paper's full implementation, the inserted token is randomized per insertion; a fixed token is used here for clarity.
 
 ### Invisible-character defense
-
 When the Invisible Character defense is active, the extracted .txt files will look normal in most editors because invisible characters are not rendered. Use a hex dump to verify their presence ``hexdump -C output-newspaper.txt``:
 
 ```
@@ -29,6 +28,7 @@ When the Invisible Character defense is active, the extracted .txt files will lo
                              └─ these three bytes of the invisible character,
                                 so they show up as “...” on the right
 ```
+> Our code uses three invisible characters: '\u200B', '\u2060', and '\u2063'.
 
 ---
 
