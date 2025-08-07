@@ -25,7 +25,7 @@ Insert invisible characters directly into words, e.g., ``Today → Tod&ZeroWidth
 
 ### Browser Render Result
 
-The protected page renders the same as the original (no visible differences).
+**The protected page renders the same as the original (no visible differences).**
 ![Alt text](demo.png)
 
 ### Web Scraping Results
