@@ -25,10 +25,23 @@ Insert invisible characters directly into words, e.g., ``Today → Tod&ZeroWidth
 
 ### Browser Render Result
 
-The protected webpage renders identically to the original. See the figure below.
+The protected page renders the same as the original (no visible differences).
 ![Alt text](demo.png)
 
 ### Web Scraping Results
 
+We tested commonly used content extractors (also used in large-scale pretraining pipelines, e.g., The Pile [1]). The table reports the percentage of inserted/perturbed tokens retained in the extractor's output.
+
+| Tool      | Invisible Style | Invisible Character |
+| ----------- | ----------- | ----------- |
+| Beautiful Soup      | 100%       |  100% |
+| Goose3   | 100%        | 100% |
+| Newspaper   | 100%        | 100% | 
+| Trafilatura   | 100%        | 59.78% |
 
 
+------------
+## Reproducibility
+*All scripts and instructions to reproduce the extraction and retention numbers are in the [web-crawling](web-crawling/) directory of this repository.*
+
+[1] https://arxiv.org/abs/2101.00027
