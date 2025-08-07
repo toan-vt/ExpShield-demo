@@ -23,7 +23,7 @@ Insert invisible characters directly into words, e.g., ``Today → Tod&ZeroWidth
 
 ------------
 
-### Browser Render Result
+### Browser Rendering
 
 **The protected page renders the same as the original (no visible differences).**
 ![Alt text](demo.png)
